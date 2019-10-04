@@ -1,2 +1,2 @@
-# Fun-esDiversas
+# FuncoesDiversas
 Contribua com sua função extremamente genérica 

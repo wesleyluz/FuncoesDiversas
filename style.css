@@ -1,0 +1,77 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+ 
+* {
+margin: 0;
+border: 0;
+}
+
+body {
+font-family: 'Montserrat', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+font-weight: bold;
+}
+
+.title {
+margin: 5rem;
+float: center;
+margin-right: 5rem;
+}
+
+.title small {
+font-size: 18px;
+font-weight: lighter;
+}
+
+button {
+font-family: 'Montserrat', sans-serif;
+cursor: pontoer;
+padding: .2rem;
+padding-left: 2rem;
+padding-right: 2rem;
+background-color: #fff;
+color: #FFF;
+font-size: 18px;
+font-weight: 600;
+margin: 1rem;
+margin-top: 1rem;
+box-shadow: 0px 0px 8px 0px #666;
+bottom: 1rem;
+right: 1rem;
+}
+
+button:hover {
+background-color: #fff;	
+}
+
+.atualizar {
+background-color: #000; 
+}
+
+.atualizar:hover {
+background-color: #fff;
+}
+
+.linha {
+bottom: 3rem;
+}
+
+.poligono {
+bottom: 5rem;
+}
+
+.circulo {
+bottom: 7rem;
+}
+
+canvas {
+box-shadow: 0px 0px 4px 0px #666;
+cursor: crosshair;
+}

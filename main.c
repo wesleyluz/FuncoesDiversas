@@ -1,92 +1,165 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#ifndef _MAIN_C_
+#define _MAIN_C_
+#include "cofo.h"
 
-int lerMatriz(char letra,int stat,int **matriz){
-	if(letra=='/'){
-		return matriz[stat][0];
-	}else if(letra == '*'){
-		return matriz[stat][1];
-	}else{
-		return matriz[stat][2];
-	}
+
+int main(void){
+    Cofo *c = NULL;
+    Cavaleiros *c1;
+    Cavaleiros *res6;
+    char *signo;
+    int stat,stat2,stat3;
+    int res,res3,verif;
+    char *nome;
+    nome = (char*)malloc(sizeof(char*)*100);
+    signo = (char*)malloc(sizeof(char*)*100);
+    int opc=1,n,i;
+        do{
+            printf("[1] - Criar sala\n\n");
+            printf("[2] - Excluir sala\n\n");
+            printf("[3] - Inserir aluno\n\n");
+            printf("[4] - Consultar \n\n");
+            printf("[5] - Remover aluno\n\n");
+            printf("[6] - Lista \n\n");
+            printf("[0] - Sair  Program\n\n");
+            scanf("%d",&opc);
+            switch(opc){
+                case 1:
+                    if(c==NULL){
+                        printf("Digite o tamanho:\n");
+                        scanf("%d",&n);
+                        if(n>0){
+                            c = cofCreate(n);
+                            if(c!=NULL){
+                            //printf("\nSua equipe de cavaleiros de  ouro foi criada com sucesso.\n\n");
+                            }else{
+                            printf("Não foi possível criar\n");
+                            }
+                        }else{
+                            printf("insira um tamanho maior que zero.\n");
+                        }
+                    }else{
+                     
+                    }
+                        fflush(stdin);
+                    break;
+                case 2:
+                    if(c!=NULL){
+                        stat3 = RemoveAll(c);
+                        if(stat3==TRUE){
+                            stat2 = cofDestroy(c);
+                            if(stat2 == TRUE){
+                                c = NULL;
+                                printf("\nA sua sala foi aniquilada com sucesso.\n");
+                            }else{
+                                printf("\nDesculpe.A sua sala nao foi possivel de ser excluida.\n\n");
+                            }
+                        }
+                    }else{
+                        printf("\nNao existe equipe para destruir.\n\n");
+                    }
+                    fflush(stdin);
+                    break;
+                case 3:
+                    c1 = (Cavaleiros*)malloc(sizeof(Cavaleiros));
+                    c1->nome = (char*)malloc(sizeof(char)*100);
+                    c1->signo = (char*)malloc(sizeof(char)*100);
+                    if(c!=NULL){
+                        if(c1!=NULL){
+                            if(c->nCav<c->maxCav){
+                                printf("Digite a nome do aluno:\n");
+                                scanf("%s",(c1->nome));
+                                fflush(stdin);
+                                printf("Digite a idade:\n");
+                                scanf("%d",&(c1->id));
+                                fflush(stdin);
+                                printf("Digite o numero de artigos publicados:\n");
+                                scanf("%d",&(c1->vit));
+                                fflush(stdin);
+                                printf("Digite a altura:\n");
+                                scanf("%f",&(c1->alt));
+                                fflush(stdin);
+                                printf("Digite o prato favorito:\n");
+                                scanf("%s",(c1->signo));
+                                fflush(stdin);
+                                verif = cmpSigno((void*)c1->signo,(void*)c1);
+                                stat = cofInsert(c,(void*)c1);
+                                if(stat == TRUE){
+                                      printf("\n:::: Os elementos do aluno foram inseridos na colecao ::::\n\n");
+                                      imprimirCavaleiros(c1);
+                                }else{
+                                      printf("Os elementos do aluno nao conseguiram ser inseridos.\n");
+                                }
+                            }else{
+                                printf("A sua equipe ja foi totalmente preenchida.\n\n");
+                            }
+                        }
+                    }else{
+                        printf("A equipe que voce quer inserir esta vazia.\n");
+                    }
+
+                    fflush(stdin);
+                    break;
+                case 4:
+                    if(c!=NULL){
+                        printf("Digite o signo do aluno a ser consultado:\n");
+                        scanf("%s",signo);
+                        fflush(stdin);
+                        printf("Digite o nome do aluno a ser consultado:\n");
+                        scanf("%s",nome);
+                        fflush(stdin);
+                        res6 = cofQuery(c,(void*)signo,(void*)nome);
+                        if(res6 != NULL){
+                            printf("\n ::::O aluno foi encontrado ::::\n\n");
+                            imprimirCavaleiros(res6);
+                        }else{
+                            printf("\n ::::O aluno informado nao esta dentro da sala:::: \n\n");
+                        }
+                    }else{
+                        printf("Nao existe sala para consultar aluno.\n\n");
+                    }
+                    fflush(stdin);
+                    break;
+                case 5:
+                    if(c!=NULL){
+                        printf("Digite o prato favorito do aluno a ser removido:\n");
+                        scanf("%s",signo);
+                        printf("Digite a nome do aluno a ser removido:\n");
+                        scanf("%s",nome);
+                        res3 = cofRemove(c,(void*)signo,(void*)nome);
+                        if(res3 == TRUE){
+                            printf("\n :::: o aluno foi removido ::::\n\n");
+                        }else{
+                                printf("\n ::::o aluno nao foi removido, pois não foi encontrado:::: \n");
+                        }
+                    }else{
+                        printf("\n:::: Nao existe equipe para remover aluno ::::\n");
+                    }
+                    fflush(stdin);
+                    break;
+                case 6:
+                    if(c!=NULL){
+                        if(c->nCav>0){
+                            imprimirCofo(c);
+                        }else{
+                            printf("\n:::: Nao tem alunos ::::\n\n");
+                        }
+                    }else{
+                        printf("\n:::: Nao existe sala para listar ::::\n\n");
+                    }
+                    fflush(stdin);
+                    break;
+                default:
+                    i=0;
+                    if(opc!=0){
+                      printf("Opcao invalida, o que quer fazer aluno?\n");
+                    }
+                    fflush(stdin);
+                    break;
+            }
+        }while(opc!=0);
+        printf("Obrigado .\n");
 }
 
-int main(void) {
-	int **matriz,stat,newstat;
-	int i=0,j=0;
-	int aceita=21;
-	matriz = (int**)malloc(sizeof(int*)*4*4);
-	for(int i=0;i<4;i++){
-		matriz[i]=(int*)malloc(sizeof(int));
-	}
-	char *frase,letra,*frase1;
-	frase = (char*)malloc(sizeof(char));
-	frase1 = (char*)malloc(sizeof(char));
-	if(frase!=NULL){
-		scanf("%s",frase);
 
-		if(matriz!=NULL){
-
-			matriz[0][0] = 1;
-			matriz[0][1] = 9;
-			matriz[0][2] = 9;
-			matriz[0][3] = 0;
-			matriz[1][0] = 9;
-			matriz[1][1] = 2;
-			matriz[1][2] = 9;
-			matriz[1][3] = 0;
-			matriz[2][0] = 2;
-			matriz[2][1] = 3;
-			matriz[2][2] = 2;
-			matriz[2][3] = 0;
-			matriz[3][0] = 9;
-			matriz[3][1] = 9;
-			matriz[3][2] = 9;
-			matriz[3][3] = 12;
-
-			stat=0;
-
-			letra = frase[i];
-
-			while(aceita!=12 && stat!=9){
-				//printf("%d\n",stat);
-				newstat = lerMatriz(letra,stat,matriz);
-			//	printf("to aqui");
-				if(newstat!=9){
-					frase1[j]=letra;
-					j++;
-					
-					i++;
-
-					letra = frase[i];
-					frase1[j]=letra;
-
-					
-					if(letra == '/' && frase[i-1] == '*'){
-						aceita = 12;
-					}
-
-					//printf("Aqui.\n");
-					if(stat==4){
-						printf("aqui");
-						aceita = 12;
-					}
-				}
-				stat = newstat;
-			}
-			
-		}
-	//	printf("ta aqui");
-		if(aceita==12){
-			
-			printf("Aceita.\n");
-			printf("%s\n",frase1);
-			
-		}else{
-			printf("Não Aceita.\n");
-		}
-
-	}
-
-}
+#endif // _main_c_

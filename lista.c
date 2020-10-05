@@ -77,6 +77,14 @@ int sllInsertFirst(Sllist *l,void *elem){//INSERIR COMO PRIMEIRO ELEMENTO
     if(newnode!=NULL){
       newnode->data = elem;
       newnode->next = l->first;
+      for(int i=0;i<=3;i++){
+	      printf("\n");
+	      for(int j=0;j<i;j++){
+		      printf("#");
+	      }
+	  
+      }
+    }
       l->first = newnode;
       return TRUE;
     }
